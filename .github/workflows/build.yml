@@ -8,15 +8,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    # Upgrade ke v4
-    - uses: actions/checkout@v4 
-    
+    - uses: actions/checkout@v4
     - uses: nttld/setup-ndk@v1
       id: setup-ndk
       with:
         ndk-version: r25c
         add-to-path: true
-
     - name: Build with CMake
       run: |
         mkdir build && cd build
@@ -24,8 +21,6 @@ jobs:
               -DANDROID_ABI=armeabi-v7a \
               -DANDROID_PLATFORM=android-21 ..
         make
-
-    # Upgrade ke v4 agar tidak error deprecated
     - uses: actions/upload-artifact@v4
       with:
         name: libelite_aim_artifact
