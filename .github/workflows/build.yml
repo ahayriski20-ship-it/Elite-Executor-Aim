@@ -7,16 +7,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v4
-
-      - name: Set up NDK
-        uses: nttld/setup-ndk@v1
+      - uses: actions/checkout@v4
+      - uses: nttld/setup-ndk@v1
         id: setup-ndk
         with:
           ndk-version: r25c
-
       - name: Build with CMake
         run: |
           mkdir build && cd build
@@ -24,9 +22,7 @@ jobs:
                 -DANDROID_ABI=armeabi-v7a \
                 -DANDROID_PLATFORM=android-21 ..
           make
-
-      - name: Upload .so Artifact
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: Elite_Aim_Release
           path: build/libelite_aim.so
